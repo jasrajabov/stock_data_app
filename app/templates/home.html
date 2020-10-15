@@ -2,13 +2,22 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Stock Data App</title>
   </head>
+  <h4>STOCK DATA APP</h4>
   <body>
     <form action="{% url 'stockdata' %}">
-    <label for="fname">Enter a stock symbol</label>
+    <label for="stock_symbol">Enter a stock symbol</label>
     <input type="text" id="stock_symbol" name="stock_symbol"><br><br>
     <input type="submit" value="Submit">
+    <br>
+    <br>
+    <label for="debug_mode">Debug mode:</label>
+    <select name="debug_mode" id="debug_mode">
+      <option value="false">False</option>
+      <option value="true">True</option>
+    <br>
+
 </form>
   </body>
 </html>

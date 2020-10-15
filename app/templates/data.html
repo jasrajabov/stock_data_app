@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <h4>STOCK DATA APP</h4>
+  <a href="{% url 'index' %}">Home</a>
+  <br>
+  <body>
+    <br>
+    <form class="" action="{% url 'stockdata' %}">
+      <p style="color:blue;"><b>Peers</b></p>
+      {% for symbol in data.peers %}
+      <a href="http://localhost:8000/data/?stock_symbol={{symbol}}&debug_mode=false" name='stock_symbol'>{{symbol}}</a>
+      {% endfor %}
+    </form>
+    <br>
+    <p style="color:blue;"><b>Recommendation Trends</b></p>
+    {% for key, value in data.recommendation_trends.items %}
+    <small><b>{{key}}</b>:  {{value}}</small>
+    <br>
+    {% endfor %}
+    <br>
+    <br>
+  </body>
+</html>
