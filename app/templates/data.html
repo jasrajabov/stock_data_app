@@ -9,16 +9,18 @@
   <br>
   <body>
     <br>
+    <h3 style="color:blue;">{{ data.company_profile.name }}</h3>
+    <img src="{{ data.company_profile.logo }}" alt="">
     <form class="" action="{% url 'stockdata' %}">
-      <p style="color:blue;"><b>Peers</b></p>
+      <p><b>Peers</b></p>
       {% for symbol in data.peers %}
       <a href="http://localhost:8000/data/?stock_symbol={{symbol}}&debug_mode=false" name='stock_symbol'>{{symbol}}</a>
       {% endfor %}
     </form>
     <br>
-    <p style="color:blue;"><b>Recommendation Trends</b></p>
+    <p><b>Recommendation Trends</b></p>
     {% for key, value in data.recommendation_trends.items %}
-    <small><b>{{key}}</b>:  {{value}}</small>
+    <small><b>{{key.capitalize}}</b>:  {{value}}</small>
     <br>
     {% endfor %}
     <br>

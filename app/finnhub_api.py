@@ -24,3 +24,8 @@ class FinnhubApiMethods():
         url = 'https://finnhub.io/api/v1/stock/peers?symbol={}&token={}'.format(stock_symbol, api_key)
         response = requests.get(url)
         return response.json()
+
+    def getCompanyProfile(stock_symbol, api_key=finnhub_api_key,debug_mode=None):
+        url = 'https://finnhub.io/api/v1/stock/profile2?symbol={}&token={}'.format(stock_symbol, api_key)
+        response = requests.get(url)
+        return response.json()
