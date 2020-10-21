@@ -9,7 +9,7 @@
   <br>
   <body>
     <br>
-    <h3 style="color:blue;">{{ data.company_profile.name }}</h3>
+    <h3 style="color:blue;">{{ data.company_profile.name }} | (ticker: {{ data.company_profile.ticker }})</h3>
     <img src="{{ data.company_profile.logo }}" alt="">
     <form class="" action="{% url 'stockdata' %}">
       <p><b>Peers</b></p>
@@ -24,6 +24,18 @@
     <br>
     {% endfor %}
     <br>
+    <form action="{% url 'candelestick' %}">
+      <label for="charts">Get chart:</label>
+      <input type="text" id="stock_symbol" name="stock_symbol" value="{{ data.company_profile.ticker }}">
+      <select name="date" id="charts">
+        <option value="1">today</option>
+        <option value="7">last week</option>
+        <option value="30">last month</option>
+        <option value="90">last three months</option>
+      </select>
+      <br><br>
+      <input type="submit" value="Submit">
+    </form>
     <br>
   </body>
 </html>
