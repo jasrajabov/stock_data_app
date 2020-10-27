@@ -10,4 +10,4 @@ services:
   - mongodb
 
 script:
-  - python manage.py test
+  - py.test
