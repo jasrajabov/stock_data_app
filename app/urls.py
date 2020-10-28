@@ -3,8 +3,7 @@ from app import views
 
 urlpatterns = [
 
-    path('', views.index, name='index'),
+    path('', views.stockData, name='index'),
     path('data/', views.stockData, name='stockdata'),
-    path('data/chart/', views.getCandlestickData, name='candelestick'),
 
 ]

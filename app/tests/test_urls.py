@@ -10,7 +10,3 @@ class TestUrls:
     def test_stockdata_url(self):
         path = reverse('stockdata')
         assert resolve(path).view_name == 'stockdata'
-
-    def test_candlestick_url(self):
-        path = reverse('candelestick')
-        assert resolve(path).view_name == 'candelestick'
