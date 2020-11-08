@@ -35,4 +35,4 @@ class TestWithPytest(TestCase):
         url = 'http://localhost:8000/data/?stock_symbol=123xyz'
         request = RequestFactory().get(url)
         response = stockData(request)
-        assert response.status_code == 404
+        assert response.status_code == 400
