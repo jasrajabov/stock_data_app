@@ -26,7 +26,7 @@
   <br>
   <body>
     <br>
-    <form action="{% url 'fixmessage' %}" method='get'>
+    <form action="{% url 'fixmessage' %}" method="get">
       <h4>Select Message Type</h4>
       <select name="message_type" id="message_type">
         <option value="New Order Single">New Order Single 'D' message</option>
@@ -60,20 +60,6 @@
 </form>
       <br>
       <br>
-      {% if fix_message %}
-      <div class="alert alert-success" role="alert">
-      <b>Success: {{message_type}}</b>
-      <br>
-      {{ fix_message }}
-      </div>
-      {% endif %}
-      {% if errors %}
-      <div class="alert alert-danger" role="alert">
-      <b>Error: {{message_type}}</b>
-      <br>
-      {{ errors }}
-      </div>
-      {% endif %}
       <br>
     <br>
     <br>

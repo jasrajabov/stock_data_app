@@ -36,3 +36,20 @@ class TestWithPytest(TestCase):
         request = RequestFactory().get(url)
         response = stockData(request)
         assert response.status_code == 400
+
+    def test_fix_input_page(self):
+        url = reverse('fixinput')
+        response = self.client.get(url)
+        assert response.status_code == 200
+
+    def test_fix_message_page(self):
+        url = 'http://localhost:8000/fixmessage/?message_type=test&stock_symbol=test&quantity=1&side=Buy&order_type=test'
+        request = RequestFactory().get(url)
+        # import ipdb; ipdb.set_trace()
+        response = generate_fix_message(request)
+        assert response.status_code == 200
+
+    def test_fix_validator_home_page(self):
+        url = reverse('fixvalidator')
+        response = self.client.get(url)
+        assert response.status_code == 200

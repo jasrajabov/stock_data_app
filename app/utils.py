@@ -17,20 +17,23 @@ def unixTimeConverter(delta):
     return str_unix_time[0], str_unix_time[1]
 
 def createChart(data, stock):
-    df = pd.DataFrame(data)
-    df['t'] = df['t'].apply(lambda t: datetime.datetime.utcfromtimestamp(t))
-    layout = Layout(plot_bgcolor='rgba(24, 36, 53, 1)')
-    fig = go.Figure(data=[go.Candlestick(x=df['t'],
-                    open=df['o'], high=df['h'],
-                    low=df['l'], close=df['c'])
-                         ], layout=layout)
+    if not data.get('s') == 'no_data':
+        df = pd.DataFrame(data)
+        df['t'] = df['t'].apply(lambda t: datetime.datetime.utcfromtimestamp(t))
+        layout = Layout(plot_bgcolor='rgba(24, 36, 53, 1)')
+        fig = go.Figure(data=[go.Candlestick(x=df['t'],
+                        open=df['o'], high=df['h'],
+                        low=df['l'], close=df['c'])
+                             ], layout=layout)
 
-    fig.update_layout(xaxis_rangeslider_visible=False,
-                        autosize=True,
-                        width=1000,
-                        height=500,
-                        yaxis_title='{} stock'.format(stock),
-                        xaxis_title='Daily price',)
+        fig.update_layout(xaxis_rangeslider_visible=False,
+                            autosize=True,
+                            width=1000,
+                            height=500,
+                            yaxis_title='{} stock'.format(stock),
+                            xaxis_title='Daily price',)
 
-    plt_div = plot(fig, output_type='div')
+        plt_div = plot(fig, output_type='div')
+    else:
+        plt_div = 'no data for chart for today'
     return plt_div
