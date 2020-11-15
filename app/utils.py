@@ -26,10 +26,10 @@ def createChart(data, stock):
                         low=df['l'], close=df['c'])
                              ], layout=layout)
 
-        fig.update_layout(xaxis_rangeslider_visible=False,
+        fig.update_layout(xaxis_rangeslider_visible=True,
                             autosize=True,
-                            width=1000,
-                            height=500,
+                            width=800,
+                            height=400,
                             yaxis_title='{} stock'.format(stock),
                             xaxis_title='Daily price',)
 

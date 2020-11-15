@@ -61,5 +61,9 @@ def validate_fix_message(request):
     fix_validator = FixMessageValidator()
     fix_message = request.GET['fix_message_to_validate']
     validator_result = fix_validator.validate_new_cancel_request(fix_message)
-    return render(request, 'fix_data_validator.html', {'validator_result':
-        validator_result}, status=200)
+    return render(request, 'fix_data_validator.html',
+    {
+        'validator_result':validator_result,
+        'fix_message':fix_message
+    },
+    status=200)

@@ -36,7 +36,7 @@
       <br>
       <br>
       <h4>FIX Message</h4>
-      <textarea placeholder="Enter FIX message here..." cols="80" rows="4" name='fix_message_to_validate'></textarea>
+      <textarea placeholder="Enter FIX message here..." cols="80" rows="4" name='fix_message_to_validate' required></textarea>
       <br>
       <br>
       <button type="submit" class="btn btn-secondary">Validate</button>
@@ -44,9 +44,22 @@
     <br>
     <br>
     {% if validator_result %}
-    <div class="alert alert-danger" role="alert">
-    <b>Error: {{validator_result}} - missing</b>
+      <div class="alert alert-danger" role="alert">
+      <b>Uh-oh, missing fields!</b>
+      <br>
+      <br>
+      <b>{{fix_message}}</b>
+      <br>
+      <br>
+      {% for field in validator_result %}
+      <div><b>{{field}}</b></div>
+      {% endfor %}
     </div>
+    {% elif not validator_result and fix_message %}
+      <div class="alert alert-success" role="alert">
+      <b>Looks good!</b>
+      <br>
+      {{fix_message}}
     <br>
     {% endif %}
     <head>
