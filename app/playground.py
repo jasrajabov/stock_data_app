@@ -1,4 +1,5 @@
 import simplefix
+s = 'as'
 
 
 class FixMessageGenerator():
