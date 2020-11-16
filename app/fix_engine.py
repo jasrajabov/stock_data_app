@@ -40,6 +40,7 @@ class FixMessageGenerator():
         self.msg.append_pair(11, self.genOrderID())
         self.msg.append_pair(55, data['stock_symbol'])
         self.msg.append_pair(54, side.get(data['side']))
+        self.msg.append_utc_timestamp(60, header=True)
         self.msg.append_pair(38, data['quantity'])
         self.msg.append_pair(40, order_type.get(data['order_type']))
         self.mss = self.msg.encode()
@@ -54,6 +55,7 @@ class FixMessageGenerator():
         self.msg.append_pair(55, data['stock_symbol'])
         self.msg.append_pair(54, side.get(data['side']))
         self.msg.append_utc_timestamp(60, header=True)
+        self.msg.append_pair(38, data['quantity'])
         self.mss = self.msg.encode()
         self.parsed_msg.append_buffer(self.mss)
         return self.parsed_msg.get_message()
@@ -68,7 +70,17 @@ class FixMessageValidator():
     def validate_new_cancel_request(self, fix_message):
         missing_pairs = []
         tags = self.get_tags_from_fix(fix_message)
+        # import ipdb; ipdb.set_trace()
         for tag_value in new_cancel_request.items():
+            if str(tag_value[1]) not in tags:
+                missing_pairs.append(tag_value)
+        return missing_pairs
+
+    def validate_new_order_request(self, fix_message):
+        missing_pairs = []
+        tags = self.get_tags_from_fix(fix_message)
+        # import ipdb; ipdb.set_trace()
+        for tag_value in new_order_single.items():
             if str(tag_value[1]) not in tags:
                 missing_pairs.append(tag_value)
         return missing_pairs
