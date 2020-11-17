@@ -62,13 +62,15 @@ def validate_fix_message(request):
     message_type = request.GET['message_type']
     fix_message = request.GET['fix_message_to_validate']
     validator_result = None
+    value_errors = None
     if message_type == 'New Order Single':
-        validator_result = fix_validator.validate_new_order_request(fix_message)
+        validator_result, value_errors = fix_validator.validate_new_order_request(fix_message)
     elif message_type == 'Order Cancel Request':
-        validator_result = fix_validator.validate_new_cancel_request(fix_message)
+        validator_result, value_errors = fix_validator.validate_new_cancel_request(fix_message)
     return render(request, 'fix_data_validator.html',
     {
         'validator_result':validator_result,
+        'value_errors': value_errors,
         'fix_message':fix_message
     },
     status=200)

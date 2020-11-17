@@ -61,8 +61,8 @@ class TestWithPytest(TestCase):
         assertTemplateUsed(response, 'fix_data_validator.html')
 
     def test_fixvalidator_result_page(self):
-        url = 'http://localhost:8000/fixvalidate/result?message_type=New+Order+Single&fix_message_to_validate=test'
-        url2 = 'http://localhost:8000/fixvalidate/result?message_type=Order+Cancel+Request&fix_message_to_validate=test'
+        url = 'http://localhost:8000/fixvalidate/result?message_type=New+Order+Single&fix_message_to_validate=8=TEST'
+        url2 = 'http://localhost:8000/fixvalidate/result?message_type=Order+Cancel+Request&fix_message_to_validate=8=TEST'
         response = client_request(url)
         response2 = client_request(url2)
         assert response.status_code == 200

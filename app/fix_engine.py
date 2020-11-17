@@ -58,29 +58,39 @@ class FixMessageGenerator():
         self.msg.append_pair(38, data['quantity'])
         self.mss = self.msg.encode()
         self.parsed_msg.append_buffer(self.mss)
+        # import ipdb; ipdb.set_trace()
         return self.parsed_msg.get_message()
 
 class FixMessageValidator():
 
     def get_tags_from_fix(self, fix_message):
         message_pairs = fix_message.split('|')
-        tags = [pair.split('=')[0] for pair in message_pairs]
-        return tags
+
+        tags = [pair.split('=') for pair in message_pairs]
+        # import ipdb; ipdb.set_trace()
+        message_pairs_dict = dict(tags)
+        return message_pairs_dict
 
     def validate_new_cancel_request(self, fix_message):
         missing_pairs = []
+        value_errors = []
         tags = self.get_tags_from_fix(fix_message)
+        if tags.get('35') != 'F':
+            value_errors.append('{} is incorrect value for tag 35 (MsgType)'.format(tags.get('35')))
         # import ipdb; ipdb.set_trace()
         for tag_value in new_cancel_request.items():
-            if str(tag_value[1]) not in tags:
+            if str(tag_value[1]) not in tags.keys():
                 missing_pairs.append(tag_value)
-        return missing_pairs
+        return missing_pairs, value_errors
 
     def validate_new_order_request(self, fix_message):
         missing_pairs = []
+        value_errors = []
         tags = self.get_tags_from_fix(fix_message)
         # import ipdb; ipdb.set_trace()
+        if tags.get('35') != 'D':
+            value_errors.append('{} is incorrect value for tag 35 (MsgType)'.format(tags.get('35')))
         for tag_value in new_order_single.items():
-            if str(tag_value[1]) not in tags:
+            if str(tag_value[1]) not in tags.keys():
                 missing_pairs.append(tag_value)
-        return missing_pairs
+        return missing_pairs, value_errors

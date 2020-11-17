@@ -43,7 +43,27 @@
 </form>
     <br>
     <br>
-    {% if validator_result %}
+
+    {% if validator_result and value_errors %}
+      <div class="alert alert-danger" role="alert">
+      <b>Uh-oh, missing fields and incorrect values!</b>
+      <br>
+      <br>
+      <b>{{fix_message}}</b>
+      <br>
+      <br>
+      {% for field in validator_result %}
+      <div><b>{{field}}</b></div>
+      {% endfor %}
+      <br>
+      {% for val_err in value_errors %}
+      <div>
+        <b>{{val_err}}</b>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% elif validator_result and not value_errors %}
       <div class="alert alert-danger" role="alert">
       <b>Uh-oh, missing fields!</b>
       <br>
@@ -53,8 +73,24 @@
       <br>
       {% for field in validator_result %}
       <div><b>{{field}}</b></div>
+      <br>
       {% endfor %}
-    </div>
+      <br>
+
+    {% elif not validator_result and value_errors %}
+      <div class="alert alert-danger" role="alert">
+      <b>Uh-oh, incorrect values!</b>
+      <br>
+      <br>
+      <b>{{fix_message}}</b>
+      <br>
+      <br>
+      {% for val_err in value_errors %}
+      <div><b>{{val_err}}</b></div>
+      <br>
+      {% endfor %}
+      <br>
+
     {% elif not validator_result and fix_message %}
       <div class="alert alert-success" role="alert">
       <b>Looks good!</b>
@@ -62,6 +98,7 @@
       {{fix_message}}
     <br>
     {% endif %}
+    
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
