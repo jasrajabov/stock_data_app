@@ -1,5 +1,6 @@
 from django.test import TestCase, RequestFactory, Client
 from django.urls import reverse, resolve
+from django import urls
 from app.finnhub_api import FinnhubApiMethods as fb
 from stockapp.settings import finnhub_api_key
 import requests
@@ -7,19 +8,29 @@ import requests_mock
 from pytest_django.asserts import assertTemplateUsed
 from app.views import *
 import json
+import pytest
 
 
 def client_request(url):
     return Client().get(url)
 
-class TestWithPytest(TestCase):
+
+
+class TestWithPytest:
+
+    @pytest.mark.parametrize('param', [
+        ('index'),
+        ('fixinput'),
+        ('fixvalidator')
+    ])
+    def test_views(self, param):
+        url = urls.reverse(param)
+        response = client_request(url)
+        assert response.status_code == 200
 
     def test_home_gape(self):
         url = reverse('index')
         response = client_request(url)
-        # request = RequestFactory().get(url)
-        # response = stockData(request)
-        print(response.templates[0])
         assert response.status_code == 200
         assertTemplateUsed(response, 'data.html')
 
