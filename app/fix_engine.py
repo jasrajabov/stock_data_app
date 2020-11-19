@@ -71,10 +71,24 @@ class FixMessageValidator():
         message_pairs_dict = dict(tags)
         return message_pairs_dict
 
+    def isCheckSumValid(self, fix_message):
+        fix_until_tail = fix_message.split('10=')[0] #to remove tag 10
+        checksum_val = fix_message.split('=')[-1]
+        bytes_fix = bytes(fix_until_tail, 'ascii')
+        bytes_values = [val if val != 124 else 1 for val in bytes_fix]
+        actual_checksum_val = str(sum(bytes_values) % 256)
+        # import ipdb; ipdb.set_trace()
+        return actual_checksum_val == checksum_val, actual_checksum_val, checksum_val
+
     def validate_new_cancel_request(self, fix_message):
         missing_pairs = []
         value_errors = []
         tags = self.get_tags_from_fix(fix_message)
+        checksum_val = self.isCheckSumValid(fix_message)
+        if checksum_val[0] == False:
+            value_errors.append('{} is incorrect value for tag 10 (CheckSum). Expected value is {}'.format(
+                checksum_val[2], checksum_val[1]
+            ))
         if tags.get('35') != 'F':
             value_errors.append('{} is incorrect value for tag 35 (MsgType)'.format(tags.get('35')))
         # import ipdb; ipdb.set_trace()
