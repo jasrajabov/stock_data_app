@@ -4,17 +4,20 @@ from app.fix_mapping import *
 
 class FixMessageGenerator():
 
-    orderID = 0
-    execID = 0
-    msgSeqNum = 0
+    # orderID = 0
+    # execID = 0
+    # msgSeqNum = 0
 
-    def __init__(self):
+    def __init__(self, orderID=0, execID=0, msgSeqNum=0):
+        self.orderID = orderID
+        self.execID = execID
+        self.msgSeqNum = msgSeqNum
         self.msg = simplefix.FixMessage()
         self.parsed_msg = simplefix.FixParser()
 
     def genOrderID(self):
     	self.orderID = self.orderID+1
-    	return self.orderID
+    	return 'FXID'+str(self.orderID)
 
     def genExecID(self):
     	self.execID = self.execID+1
@@ -50,12 +53,12 @@ class FixMessageGenerator():
     def create_cancel_order_request(self, data):
         self.msg = self.create_header()
         self.msg.append_pair(35, "F")
-        self.msg.append_pair(41, self.genOrderID())
-        self.msg.append_pair(11, self.genOrderID())
+        self.msg.append_pair(41, 'OriginalID')
         self.msg.append_pair(55, data['stock_symbol'])
         self.msg.append_pair(54, side.get(data['side']))
         self.msg.append_utc_timestamp(60, header=True)
         self.msg.append_pair(38, data['quantity'])
+        self.msg.append_pair(11, self.genOrderID())
         self.mss = self.msg.encode()
         self.parsed_msg.append_buffer(self.mss)
         # import ipdb; ipdb.set_trace()
@@ -101,6 +104,11 @@ class FixMessageValidator():
         missing_pairs = []
         value_errors = []
         tags = self.get_tags_from_fix(fix_message)
+        checksum_val = self.isCheckSumValid(fix_message)
+        if checksum_val[0] == False:
+            value_errors.append('{} is incorrect value for tag 10 (CheckSum). Expected value is {}'.format(
+                checksum_val[2], checksum_val[1]
+            ))
         # import ipdb; ipdb.set_trace()
         if tags.get('35') != 'D':
             value_errors.append('{} is incorrect value for tag 35 (MsgType)'.format(tags.get('35')))
