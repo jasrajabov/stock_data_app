@@ -22,3 +22,11 @@ def data_dict():
             'quantity':1,
             'side':'Buy',
             'order_type':'Market'}
+
+@pytest.fixture
+def new_cancel_url_():
+    return 'http://localhost:8000/fixmessage/?message_type=Order+Cancel+Request&stock_symbol=AAPL&quantity=1&side=Buy&order_type=Market'
+
+@pytest.fixture
+def new_order_url_():
+    return 'http://localhost:8000/fixmessage/?message_type=New+Order+Single&stock_symbol=AAPL&quantity=1&side=Buy&order_type=Market'

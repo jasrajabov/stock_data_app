@@ -14,6 +14,8 @@ import pytest
 def client_request(url):
     return Client().get(url)
 
+def factory_get(url):
+    return RequestFactory().get(url)
 
 
 class TestWithPytest:
@@ -59,7 +61,7 @@ class TestWithPytest:
         assertTemplateUsed(response, 'fix_input.html')
 
     def test_fix_message_page(self):
-        url = 'http://localhost:8000/fixmessage/?message_type=test&stock_symbol=test&quantity=1&side=Buy&order_type=test'
+        url = 'http://localhost:8000/fixmessage/?message_type=New+Order+Single&stock_symbol=AAPL&quantity=1&side=Buy&order_type=Market'
         response = client_request(url)
         # import ipdb; ipdb.set_trace()
         assert response.status_code == 200
@@ -79,3 +81,13 @@ class TestWithPytest:
         assert response.status_code == 200
         assert response2.status_code == 200
         assertTemplateUsed(response, 'fix_data_validator.html')
+
+    def test_generate_fix_message_new_order(self, new_order_url_):
+        request = factory_get(new_order_url_)
+        response = generate_fix_message(request)
+        assert response.status_code == 200
+
+    def test_generate_fix_message_new_cancel(self, new_cancel_url_):
+        request = factory_get(new_cancel_url_)
+        response = generate_fix_message(request)
+        assert response.status_code == 200

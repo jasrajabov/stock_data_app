@@ -48,11 +48,15 @@ def generate_fix_message(request):
     fix_message = None
     if message_type == 'New Order Single':
         fix_message = fix.create_new_order_single(data)
+        return render(request, 'fix_data.html', {'fix_message':fix_message,
+            'message_type':message_type},
+            status=200)
     elif message_type == 'Order Cancel Request':
         fix_message = fix.create_cancel_order_request(data)
-    return render(request, 'fix_data.html', {'fix_message':fix_message,
-        'message_type':message_type},
-        status=200)
+        return render(request, 'fix_data.html', {'fix_message':fix_message,
+            'message_type':message_type},
+            status=200)
+    return JsonResponse({'invlid_data':'invalid message type'}, status=400)
 
 def validate_fix_message_home(request):
     return render(request, 'fix_data_validator.html', status=200)
