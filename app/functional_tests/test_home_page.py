@@ -3,6 +3,7 @@ from selenium.webdriver.support.ui import Select
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.urls import reverse
 import time
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 
 class TestHomePage(StaticLiveServerTestCase):
@@ -10,6 +11,10 @@ class TestHomePage(StaticLiveServerTestCase):
     def setUp(self):
         self.browser = webdriver.Chrome(r'/usr/local/bin/chromedriver')
 
+#         self.browser = webdriver.Remote(
+#             command_executor="https://jasurbek1991:4b80bb0d-1191-45f4-b8e8-86ecd0a7a61a@ondemand.us-west-1.saucelabs.com:443/wd/hub",
+#             desired_capabilities=DesiredCapabilities.CHROME
+# )
 
     def tearDown(self):
         self.browser.close()
