@@ -11,3 +11,8 @@ services:
 
 script:
   - py.test
+
+addons:
+  sauce_connect:
+    username: "jasurbek1991"
+    access_key: "baef3ba2041d4eb0b9ba6c60f775bfa4"
