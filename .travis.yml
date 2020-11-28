@@ -10,4 +10,4 @@ services:
   - mongodb
 
 script:
-  - py.test
+  - py.test app/functional_tests

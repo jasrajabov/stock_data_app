@@ -59,7 +59,7 @@ class TestHomePage(StaticLiveServerTestCase):
         side.select_by_value('Buy')
         order_type.select_by_value('Market')
 
-        self.browser.find_elements_by_xpath('/html/body/div/div/form/button')[0].click()
+        self.browser.find_element_by_xpath('/html/body/div/div/form/button').click()
 
         result = self.browser.find_elements_by_xpath('/html/body/div/div/div/b')[0].text
         assert 'Success' in result
