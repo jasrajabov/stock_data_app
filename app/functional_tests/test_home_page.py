@@ -40,10 +40,13 @@ class TestHomePage(StaticLiveServerTestCase):
         self.browser.get(self.live_server_url)
         self.browser.find_elements_by_xpath('/html/body/div/div/ul/li[3]/a')[0].click()
         text_box= self.browser.find_element_by_tag_name('textarea')
-        text_box.send_keys('8=FIX.4.4|9=121|35=D|34=1|52=20201125-04:32:07.639|60=20201125-04:32:07.639|49=SENDER|56=TARGET|112=TEST|11=FXID1|55=AAPL|54=1|38=1|40=1|10=198')
+        text_box.send_keys('8=FIX.4.4|9=117|35=D|34=1|52=20201118-05:27:11.398|60=20201118-05:27:11.398|49=SENDER|56=TARGET|112=TEST|11=1|55=AAPL|54=1|38=1|40=1|10=168')
         self.browser.find_elements_by_xpath('/html/body/div/div/form/button')[0].click()
         result = self.browser.find_elements_by_xpath('/html/body/div/div/div/b')[0].text
+        fix_message= self.browser.find_element_by_xpath('/html/body/div/div/div').text
+        assert '8=FIX.4.4|9=117|35=D|34=1|52=20201118-05:27:11.398|60=20201118-05:27:11.398|49=SENDER|56=TARGET|112=TEST|11=1|55=AAPL|54=1|38=1|40=1|10=168' in fix_message
         assert result == 'Looks good!'
+
 
     def test_validate_fix_generator_page(self):
         self.browser.get(self.live_server_url)
