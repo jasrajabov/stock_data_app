@@ -11,11 +11,13 @@ class FinnhubApiMethods():
             stock_symbol, api_key)
         response = requests.get(url)
         # import ipdb; ipdb.set_trace()
-        if response.json().get('t') == 0:
-            return 'Incorrect Value'
-        if response.json().get('s') == 'no_data':
-
-            return 'Bad connection'
+        try:
+            if response.json().get('t') == 0:
+                return 'Incorrect Value'
+            if response.json().get('s') == 'no_data':
+                return 'Bad connection'
+        except:
+            return 'Failed to generate json! Check input you are passing!'
         return response.json()
 
     def getRecommendationTrends(stock_symbol, api_key=finnhub_api_key):
@@ -34,6 +36,7 @@ class FinnhubApiMethods():
         return response.json()
 
     def getCandlestick(stock_symbol, api_key=finnhub_api_key, starttime=None):
+        # import ipdb; ipdb.set_trace()
         periods = unixTimeConverter(starttime)
         # import ipdb; ipdb.set_trace()
         url = 'https://finnhub.io/api/v1/stock/candle?symbol={}&resolution=5&from={}&to={}&token={}'.format(

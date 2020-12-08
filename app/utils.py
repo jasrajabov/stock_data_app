@@ -17,6 +17,7 @@ def unixTimeConverter(delta):
     return str_unix_time[0], str_unix_time[1]
 
 def createChart(data, stock):
+    # import ipdb; ipdb.set_trace()
     if not data.get('s') == 'no_data':
         df = pd.DataFrame(data)
         df['t'] = df['t'].apply(lambda t: datetime.datetime.utcfromtimestamp(t))

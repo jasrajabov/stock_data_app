@@ -27,15 +27,18 @@ def stockData(request):
         return JsonResponse({'Invalid':request.GET}, status=400)
     elif stock_json_data == 'Bad connection':
         return HttpResponse('Bad Connection', status=404)
+    elif 'Failed to generate json!' in stock_json_data:
+        return JsonResponse({'Error':stock_json_data}, status=400)
     rec_json_data = fb.getRecommendationTrends(stock_symbol)
     peers_json_data = fb.getPeers(stock_symbol)
     company_profile = fb.getCompanyProfile(stock_symbol)
     candle_stick_data = fb.getCandlestick(stock_symbol, starttime=start_time)
     plt_div = createChart(candle_stick_data, stock_symbol)
     data = {'quote':stock_json_data,
-            'recommendation_trends':rec_json_data[0],
+            'recommendation_trends':rec_json_data[:5],
             'peers':peers_json_data,
             'company_profile': company_profile}
+    # import ipdb; ipdb.set_trace()
     return render(request, 'data.html', {'data':data, 'plot_div': plt_div},)
 
 def fix_input(request):
