@@ -3,18 +3,12 @@ from selenium.webdriver.support.ui import Select
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.urls import reverse
 import time
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 
 class TestHomePage(StaticLiveServerTestCase):
 
     def setUp(self):
         self.browser = webdriver.Chrome(r'/usr/local/bin/chromedriver')
-
-#         self.browser = webdriver.Remote(
-#             command_executor="https://jasurbek1991:4b80bb0d-1191-45f4-b8e8-86ecd0a7a61a@ondemand.us-west-1.saucelabs.com:443/wd/hub",
-#             desired_capabilities=DesiredCapabilities.CHROME
-# )
 
     def tearDown(self):
         self.browser.close()
@@ -42,7 +36,7 @@ class TestHomePage(StaticLiveServerTestCase):
         text_box= self.browser.find_element_by_tag_name('textarea')
         text_box.send_keys('8=FIX.4.4|9=117|35=D|34=1|52=20201118-05:27:11.398|60=20201118-05:27:11.398|49=SENDER|56=TARGET|112=TEST|11=1|55=AAPL|54=1|38=1|40=1|10=168')
         self.browser.find_elements_by_xpath('/html/body/div/div/form/button')[0].click()
-        result = self.browser.find_elements_by_xpath('/html/body/div/div/div/b')[0].text
+        result = self.browser.find_element_by_xpath('/html/body/div/div/div/b').text
         fix_message= self.browser.find_element_by_xpath('/html/body/div/div/div').text
         assert '8=FIX.4.4|9=117|35=D|34=1|52=20201118-05:27:11.398|60=20201118-05:27:11.398|49=SENDER|56=TARGET|112=TEST|11=1|55=AAPL|54=1|38=1|40=1|10=168' in fix_message
         assert result == 'Looks good!'

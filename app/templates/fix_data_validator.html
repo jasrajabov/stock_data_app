@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
   </head>
 <div class="col-8">
-  <div class="jumbotron bg-dark text-white" style="height:160vh;width:280vh">
+  <div class="jumbotron bg-dark text-white" style="height:160vh">
     <h3 class="display-5">FIX MESSAGE VALIDATOR</h3>
     <br>
   <ul class="nav nav-pills">
@@ -43,7 +43,6 @@
 </form>
     <br>
     <br>
-
     {% if validator_result and value_errors %}
       <div class="alert alert-danger" role="alert">
       <b>Uh-oh, missing fields and incorrect values!</b>
@@ -92,21 +91,17 @@
       <br>
 
     {% elif not validator_result and fix_message %}
-      <div class="alert alert-success" role="alert" style="width:100vh">
+      <div class="alert alert-success" role="alert">
       <b>Looks good!</b>
       <br>
-      {{fix_message}}
+      <p>{{fix_message}}</p>
     <br>
     {% endif %}
+    <br>
+    <br>
 
-    <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-      <title>test</title>
-    </head>
-    <br>
-    <br>
-  </body>
   </div>
+</div>
+  </body>
+
 </html>

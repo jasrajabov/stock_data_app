@@ -6,8 +6,5 @@ python:
 install:
   - pip install -r requirements.txt
 
-services:
-  - mongodb
-
 script:
   - py.test app/tests
