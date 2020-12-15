@@ -6,8 +6,11 @@ from plotly.graph_objects import Layout
 import pandas as pd
 
 
+def todays_date():
+    return datetime.datetime.now()
+
 def unixTimeConverter(delta):
-    today = datetime.datetime.now()
+    today = todays_date()
     if today.weekday() > 4:
         delta_weekday = today.weekday() - 4
         today = today - timedelta(days=delta_weekday)
@@ -35,6 +38,7 @@ def createChart(data, stock):
                             xaxis_title='Daily price',)
 
         plt_div = plot(fig, output_type='div')
+        # import ipdb; ipdb.set_trace()
     else:
         plt_div = 'no data for chart for today'
     return plt_div

@@ -36,3 +36,8 @@ class TestFinnHubApi:
         assert fb.getStockQuote(self.stock_symbol, self.api_key) == {'a':'b'}
         assert fb.getRecommendationTrends(self.stock_symbol, self.api_key) == {'c':'d'}
         assert fb.getPeers(self.stock_symbol, self.api_key) == {'e':'f'}
+
+    def test_getStockQuote_no_data(self, requests_mock):
+        url = 'https://finnhub.io/api/v1/quote?symbol={}&token={}'.format(self.stock_symbol, self.api_key)
+        requests_mock.get(url, json={'s':'no_data'})
+        assert fb.getStockQuote(self.stock_symbol) == 'Bad connection'
