@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from app.finnhub_api import FinnhubApiMethods as fb
-from app.utils import createChart
+from app.utils import createChart, fix_splitter
 from app.fix_engine import FixMessageGenerator, FixMessageValidator
 import json
 # from app.serializers import StockDataSerializer
@@ -51,13 +51,14 @@ def generate_fix_message(request):
     fix_message = None
     if message_type == 'New Order Single':
         fix_message = fix.create_new_order_single(data)
-        return render(request, 'fix_data.html', {'fix_message':fix_message,
-            'message_type':message_type},
-            status=200)
     elif message_type == 'Order Cancel Request':
         fix_message = fix.create_cancel_order_request(data)
+    # import ipdb; ipdb.set_trace()
+    if fix_message:
+        splitted_fix = fix_splitter(fix_message, message_type)
         return render(request, 'fix_data.html', {'fix_message':fix_message,
-            'message_type':message_type},
+                    'message_type':message_type,
+                    'splitted_fix':splitted_fix},
             status=200)
     return JsonResponse({'invlid_data':'invalid message type'}, status=400)
 

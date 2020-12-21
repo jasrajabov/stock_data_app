@@ -23,6 +23,7 @@ class TestMappings:
             'Side': 54,
             'TransactTime': 60,
             'OrderQty': 38,
+            'ClOrdID': 11,
             'OrderType': 40,
             'BeginString':8,
             'BodyLength':9,
@@ -31,6 +32,8 @@ class TestMappings:
             'TargetCompID': 56,
             'MsgSeqNum': 34,
             'SendingTime': 52,
+            'CheckSum': 10,
+            'TestReqID': 112
         }
 
     def test_new_cancel_single_mappings(self):
@@ -49,4 +52,6 @@ class TestMappings:
             'TargetCompID': 56,
             'MsgSeqNum': 34,
             'SendingTime': 52,
+            'CheckSum': 10,
+            'TestReqID': 112
         }

@@ -18,16 +18,23 @@ header = {
     'TargetCompID': 56,
     'MsgSeqNum': 34,
     'SendingTime': 52,
+    'TestReqID':112
+}
+
+footer = {
+    'CheckSum':10
 }
 
 new_order_single = {
     'Symbol': 55,
     'Side': 54,
+    'ClOrdID': 11,
     'TransactTime': 60,
     'OrderQty': 38,
     'OrderType': 40
 }
 new_order_single.update(header)
+new_order_single.update(footer)
 
 """Cancel request"""
 new_cancel_request = {
@@ -40,3 +47,4 @@ new_cancel_request = {
 }
 
 new_cancel_request.update(header)
+new_cancel_request.update(footer)

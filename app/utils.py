@@ -4,6 +4,7 @@ import plotly.graph_objects as go
 from plotly.offline import plot
 from plotly.graph_objects import Layout
 import pandas as pd
+from app.fix_mapping import *
 
 
 def todays_date():
@@ -42,3 +43,26 @@ def createChart(data, stock):
     else:
         plt_div = 'no data for chart for today'
     return plt_div
+
+
+def getKeyByValue(dict, value):
+    keys = list(dict.keys())
+    values = list(dict.values())
+
+    position = values.index(value)
+    key = keys[position]
+    return key
+
+def fix_splitter(fix_message, message_type):
+    splittedFix = fix_message.__str__().split('|')
+    pairedFix = [fix.split('=') for fix in splittedFix]
+    fixTagValues = [tag for tag,value in pairedFix]
+    fixTagDesc = []
+
+    if message_type == 'New Order Single':
+        for tag in fixTagValues:
+                key = getKeyByValue(new_order_single, int(tag))
+                fixTagDesc.append(key)
+    # import ipdb; ipdb.set_trace()
+    pairedWithDesciption = list(zip(fixTagDesc, pairedFix))
+    return pairedWithDesciption
