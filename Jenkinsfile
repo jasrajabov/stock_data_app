@@ -30,7 +30,7 @@ pipeline {
             emailext body: 'BUILD STATS: $DEFAULT_CONTENT',
             subject: '$DEFAULT_SUBJECT',
             to: 'razhabov@yahoo.com'
-            }
+
         }
     }
 }
