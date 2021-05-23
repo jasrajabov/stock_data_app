@@ -49,7 +49,7 @@ class TestHomePage(StaticLiveServerTestCase):
     def test_validate_fix_generator_page(self):
         self.browser.get(self.live_server_url)
         self.browser.find_elements_by_xpath('/html/body/div/div/ul/li[2]/a')[0].click()
-
+        self.browser.implicitly_wait(1)
         stock_symbol = self.browser.find_element_by_id('stock_symbol')
         quantity = self.browser.find_element_by_id('quantity')
         side = Select(self.browser.find_element_by_id('side'))
@@ -61,6 +61,6 @@ class TestHomePage(StaticLiveServerTestCase):
         order_type.select_by_value('Market')
 
         self.browser.find_element_by_xpath('/html/body/div/div/form/button').click()
-
+        self.browser.implicitly_wait(2)
         result = self.browser.find_element_by_xpath('/html/body/div/div/div/b').text
         assert 'Success' in result
