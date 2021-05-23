@@ -11,15 +11,15 @@ pipeline {
                     steps {
                         echo 'Executing pytest unittest'
                         sh 'ls'
-                        sh 'source venv/bin/activate'
+                        sh 'source virtual/bin/activate'
                         sh 'pip3 install -r requirements.txt --user'
-                        sh 'python3 -m pytest app/tests'
+                        sh 'python3 -m py.test app/tests'
                     }
         }
                 stage('Selenium') {
                     steps {
                         sh 'echo Executing feature tests'
-                        sh 'python3 -m app/functional_tests'
+                        sh 'python3 -m py.test app/functional_tests'
                     }
                 }
     }
