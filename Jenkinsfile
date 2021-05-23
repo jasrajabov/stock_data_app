@@ -30,15 +30,6 @@ pipeline {
             emailext body: 'BUILD STATS: $DEFAULT_CONTENT',
             subject: '$DEFAULT_SUBJECT',
             to: 'razhabov@yahoo.com'
-
-            script {
-              allure([
-                includeProperties: false,
-                jdk: '',
-                properties: [],
-                reportBuildPolicy: 'ALWAYS',
-                results: [[path: 'allure_results']]
-              ])
             }
         }
     }
