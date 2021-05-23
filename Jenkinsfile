@@ -19,6 +19,8 @@ pipeline {
                 stage('Selenium') {
                     steps {
                         sh 'echo Executing feature tests'
+                        sh 'python3 -m manage.py runserver'
+                        sh 'Launched server!'
                         sh 'python3 -m py.test app/functional_tests/test_home_page.py'
                     }
                 }
