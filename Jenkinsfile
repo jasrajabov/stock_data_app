@@ -5,22 +5,16 @@ pipeline {
         cron('H/30 13-14 * * 6-7')
     }
     stages {
-        parallel {
-           stage('Launch app') {
-            steps {
-                sh 'python3 manage.py runserver'
-                sh 'Launched server!'
-            }
-        }
-        stage('Selenium') {
+        stage('Tests') {
+            parallel {
+
+                stage('Run server') {
                     steps {
-                        sh 'echo Executing functional Selenium tests'
-                        sh 'python3 -m py.test app/functional_tests/test_home_page.py'
+                        sh 'python3 manage.py runserver'
+                        sh 'Launched server!'
                     }
                 }
-        }
 
-        stage('Tests') {
                 stage('Pytest') {
                     steps {
                         echo 'Executing pytest unittest'
@@ -30,6 +24,13 @@ pipeline {
                         sh 'python3 -m py.test app/tests'
                     }
         }
+                stage('Selenium') {
+                    steps {
+                        sh 'echo Executing feature tests'
+                        sh 'python3 -m py.test app/functional_tests/test_home_page.py'
+                    }
+                }
+    }
         }
     }
     post {
