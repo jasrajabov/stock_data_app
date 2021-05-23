@@ -11,7 +11,7 @@ pipeline {
                 stage('Run server') {
                     steps {
                         sh 'python3 manage.py runserver'
-                        sh 'Launched server!'
+                        echo 'Launched server!'
                     }
                 }
 
