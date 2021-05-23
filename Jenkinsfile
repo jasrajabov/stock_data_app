@@ -11,7 +11,7 @@ pipeline {
                     steps {
                         echo 'Executing pytest unittest'
                         sh 'ls'
-                        sh 'source virtual/bin/activate'
+                        sh 'source virtualenv/bin/activate'
                         sh 'pip3 install -r requirements.txt --user'
                         sh 'python3 -m py.test app/tests'
                     }
