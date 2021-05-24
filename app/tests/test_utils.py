@@ -30,3 +30,15 @@ class TestUtils:
         time = unixTimeConverter(1)
         assert time[0] == '1608005374'
         assert time[1] == '1607918974'
+
+    @mock.patch('app.utils.FixMessageGenerator')
+    def test_fix_generator(self, mocked_FixMessageGenerator, new_cancel_fix, new_order_fix):
+        """
+        We need to return value after mocked_FixMessageGenerator because we need to instantiate class
+        """
+        mocked_FixMessageGenerator.return_value.create_new_order_single.return_value = new_order_fix
+        mocked_FixMessageGenerator.return_value.create_cancel_order_request.return_value = new_cancel_fix
+        data1 = {'message_type': 'New Order Single'}
+        data2 = {'message_type': 'Order Cancel Request'}
+        assert fix_message_generator(data1) == new_order_fix
+        assert fix_message_generator(data2) == new_cancel_fix

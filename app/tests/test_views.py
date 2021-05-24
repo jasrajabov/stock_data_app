@@ -14,6 +14,9 @@ import pytest
 def client_request(url):
     return Client().get(url)
 
+def client_request_post(url, data):
+    return Client().post(url, data=data)
+
 def factory_get(url):
     return RequestFactory().get(url)
 
@@ -91,3 +94,9 @@ class TestWithPytest:
         request = factory_get(new_cancel_url_)
         response = generate_fix_message(request)
         assert response.status_code == 200
+
+    def test_api_serve(self, api_serve_result_test_data):
+        url = urls.reverse('fix_server_api')
+        response = client_request_post(url, data=api_serve_result_test_data)
+        assert response.status_code == 200
+        assert response.json()['fix_message'] is not None

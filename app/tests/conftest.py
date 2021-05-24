@@ -30,3 +30,12 @@ def new_cancel_url_():
 @pytest.fixture
 def new_order_url_():
     return 'http://localhost:8000/fixmessage/?message_type=New+Order+Single&stock_symbol=AAPL&quantity=1&side=Buy&order_type=Market'
+
+@pytest.fixture
+def api_serve_result_test_data():
+    return {"message_type": "New Order Single",
+                   "stock_symbol": "AAPL",
+                   "quantity": 1,
+                   "price": 123,
+                   "side": "Buy",
+                   "order_type": "Market"}

@@ -4,7 +4,9 @@ from app.finnhub_api import FinnhubApiMethods as fb
 from app.utils import createChart, fix_splitter, fix_message_generator
 from app.fix_engine import FixMessageGenerator, FixMessageValidator
 import json
+from forms import FixData
 # from app.serializers import StockDataSerializer
+from django.views.decorators.csrf import csrf_exempt
 
 
 def index(request):
@@ -79,14 +81,22 @@ def validate_fix_message(request):
     },
     status=200)
 
+@csrf_exempt
 def api(request):
     """
     This is to serve fix data in json format for post requests
+    Using @csrf_exempt just to by pass csrf validation for testing
+    TODO: need to remove this @csrf_exempt
     """
-    data = request.POST
-    if data != {}:
-        fix_message = fix_message_generator(data)
-        # return JsonResponse({'fix_message': fix_message})
-        return HttpResponse({'fix_message': fix_message}, content_type='application/json')
+    if request.method == 'POST':
+        form = FixData(request.POST)
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+            fix_message = fix_message_generator(cleaned_data).__str__()
+            # return JsonResponse({'fix_message': fix_message})
+            return JsonResponse({'fix_message': fix_message})
+        else:
+            return JsonResponse(form.errors)
 
-    return HttpResponse({'error': 'no message provided'}, content_type='application/json')
+
+    return JsonResponse({'error': request.POST})
