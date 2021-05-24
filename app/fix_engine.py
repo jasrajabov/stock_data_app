@@ -16,8 +16,8 @@ class FixMessageGenerator():
         self.parsed_msg = simplefix.FixParser()
 
     def genOrderID(self):
-    	self.orderID = self.orderID+1
-    	return 'FXID'+str(self.orderID)
+    	self.orderID = self.orderID + 1
+    	return 'FXID' + str(self.orderID)
 
     def genExecID(self):
     	self.execID = self.execID+1
@@ -61,7 +61,6 @@ class FixMessageGenerator():
         self.msg.append_pair(11, self.genOrderID())
         self.mss = self.msg.encode()
         self.parsed_msg.append_buffer(self.mss)
-        # import ipdb; ipdb.set_trace()
         return self.parsed_msg.get_message()
 
 class FixMessageValidator():

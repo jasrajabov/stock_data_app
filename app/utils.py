@@ -5,6 +5,7 @@ from plotly.offline import plot
 from plotly.graph_objects import Layout
 import pandas as pd
 from app.fix_mapping import *
+from app.fix_engine import FixMessageGenerator, FixMessageValidator
 
 
 def todays_date():
@@ -66,3 +67,12 @@ def fix_splitter(fix_message, message_type):
     # import ipdb; ipdb.set_trace()
     pairedWithDesciption = list(zip(fixTagDesc, pairedFix))
     return pairedWithDesciption
+
+def fix_message_generator(data):
+    fix = FixMessageGenerator()
+    fix_message = None
+    if data['message_type'] == 'New Order Single':
+        fix_message = fix.create_new_order_single(data)
+    elif data['message_type'] == 'Order Cancel Request':
+        fix_message = fix.create_cancel_order_request(data)
+    return fix_message
