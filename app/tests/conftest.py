@@ -33,6 +33,7 @@ def new_order_url_():
 
 @pytest.fixture
 def api_serve_result_test_data():
+    #data
     return {"message_type": "New Order Single",
                    "stock_symbol": "AAPL",
                    "quantity": 1,
