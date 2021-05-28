@@ -4,6 +4,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.urls import reverse
 import time
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class TestHomePage(StaticLiveServerTestCase):
@@ -39,17 +42,24 @@ class TestHomePage(StaticLiveServerTestCase):
         text_box.send_keys('8=FIX.4.4|9=117|35=D|34=1|52=20201118-05:27:11.398|60=20201118-05:27:11.398|49=SENDER|56=TARGET|112=TEST|11=1|55=AAPL|54=1|38=1|40=1|10=168')
         self.browser.find_element_by_xpath('/html/body/div/div/form/button').click()
         self.browser.implicitly_wait(3)
-        result = self.browser.find_element_by_xpath('/html/body/div/div/div/b').text
-        self.browser.implicitly_wait(3)
-        fix_message= self.browser.find_element_by_xpath('/html/body/div/div/div').text
-        assert '8=FIX.4.4|9=117|35=D|34=1|52=20201118-05:27:11.398|60=20201118-05:27:11.398|49=SENDER|56=TARGET|112=TEST|11=1|55=AAPL|54=1|38=1|40=1|10=168' in fix_message
-        assert result == 'Looks good!'
+
+        result = WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '/html/body/div/div/div/b'))
+        )
+
+        fix_message = WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '/html/body/div/div/div'))
+        )
+
+        assert '8=FIX.4.4|9=117|35=D|34=1|52=20201118-05:27:11.398|60=20201118-05:27:11.398|49=SENDER|56=TARGET|112=TEST|11=1|55=AAPL|54=1|38=1|40=1|10=168' in fix_message.text
+        assert result.text == 'Looks good!'
 
 
     def test_validate_fix_generator_page(self):
         self.browser.get(self.live_server_url)
-        self.browser.find_elements_by_xpath('/html/body/div/div/ul/li[2]/a')[0].click()
-        self.browser.implicitly_wait(3)
+        WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '/html/body/div/div/ul/li[2]/a'))
+        ).click()
         stock_symbol = self.browser.find_element_by_id('stock_symbol')
         quantity = self.browser.find_element_by_id('quantity')
         side = Select(self.browser.find_element_by_id('side'))
