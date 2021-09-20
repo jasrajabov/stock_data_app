@@ -12,3 +12,5 @@ virtualenv
 .gitignore
 .coverage
 playground.py
+app/functional_tests
+app/tests
