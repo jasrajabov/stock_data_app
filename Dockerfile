@@ -8,7 +8,9 @@ CMD ["ls"]
 
 RUN pip install -r ./my_django_app/requirements.txt
 
-#CMD ["py.test", "./myfolder/app/tests/"]
+#CMD ["py.test", "./my_django_app/app/tests/"]
+
+#CMD ["py.test", "./my_django_app/app/functional_tests/"]
 
 
 #Steps

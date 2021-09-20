@@ -1,10 +1,33 @@
 version: "3.9"
    
 services:
-  my_django_app:
+  selenium-remote:
+    image: selenium/standalone-chrome
+    ports:
+      - 4444:4444
+    restart: always
+
+  stock_app:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
-    volumes:
+    command: python my_django_app/manage.py runserver 0.0.0.0:8000
+    volumes: 
       - .:/my_django_app
     ports:
-      - "8000:8000"
+      - 8000:8000
+
+  selenium_tests:
+    build: .
+    command: pytest my_django_app/app/functional_tests --cov=app/functional_tests
+    volumes:
+      - .:/my_django_app
+    depends_on: 
+      - selenium-remote
+      - stock_app
+  
+  # unittests:
+  #   build: .
+  #   command: pytest my_django_app/app/tests --cov=app/tests
+  #   volumes:
+  #     - .:/my_django_app
+  #   depends_on: 
+  #     - selenium_tests
